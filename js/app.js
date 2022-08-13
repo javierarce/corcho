@@ -1,4 +1,5 @@
 let $canvas
+let loading = false
 
 let frames = []
 let ZINDEX = 10
@@ -114,7 +115,6 @@ const getRandomPosition = (img) => {
 
 
 const draw = async (data) => {
-
   frames.forEach((frame) => {
     frame.remove()
   })
@@ -131,6 +131,8 @@ const draw = async (data) => {
   })
 
   Promise.all(promises).then((results) => {
+    loading = false
+
     let height = 0
 
     results.forEach((frame) => {
@@ -190,15 +192,20 @@ function showTime() {
 }
 
 const fetchData = () => {
+  if (loading) {
+    return
+  }
+
+  loading = true
+
   fetch(`data.json?v=${Math.random() * 1000}`)
     .then((response) => response.json())
     .then(draw)
     .catch((e) => {
+      loading = false
       console.error('Error loading the data')
     })
 }
-
-window.f = fetchData
 
 const onLoad = () => {
   $canvas = document.querySelector('.Canvas')
