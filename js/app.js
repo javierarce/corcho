@@ -17,7 +17,9 @@ class Frame {
     document.removeEventListener('mousemove', this.onMouseMove.bind(this))
     document.removeEventListener('mouseup', this.onMouseExit.bind(this))
 
-    this.image.remove()
+    setTimeout(() => {
+      this.image.remove()
+    }, 500)
   }
 
   draggable () {
@@ -167,6 +169,7 @@ const reposition = () => {
 }
 
 window.r = reposition
+
 let clock 
 
 function load() {
