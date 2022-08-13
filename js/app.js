@@ -10,6 +10,15 @@ class Frame {
     this.zIndex = ZINDEX
   }
 
+  remove () {
+    this.hide()
+
+    document.removeEventListener('mousemove', this.onMouseMove.bind(this))
+    document.removeEventListener('mouseup', this.onMouseExit.bind(this))
+
+    this.image.remove()
+  }
+
   draggable () {
     this.image.addEventListener('mousedown', this.onMouseDown.bind(this))
     this.image.addEventListener('mouseup', this.onMouseUp.bind(this))
@@ -66,20 +75,19 @@ class Frame {
     this.isMouseDown = true
     this.mouseX = e.clientX
     this.mouseY = e.clientY
-    this.elementX = parseInt(this.image.style.left) || 0;
-    this.elementY = parseInt(this.image.style.top) || 0;
+    this.elementX = parseInt(this.image.style.left) || 0
+    this.elementY = parseInt(this.image.style.top) || 0
   }
 
   onMouseExit () {
     this.isMouseDown = false
-    this.elementX = parseInt(this.image.style.left) || 0;
-    this.elementY = parseInt(this.image.style.top) || 0;
+    this.elementX = parseInt(this.image.style.left) || 0
+    this.elementY = parseInt(this.image.style.top) || 0
   }
 
   onMouseOver () {
     this.zIndex = (ZINDEX + 1) % 1000
     ZINDEX = this.zIndex
-    console.log(2,  this.zIndex)
     this.image.style.zIndex = this.zIndex
   }
 }
@@ -107,12 +115,18 @@ const getRandomPosition = (img) => {
 
 const draw = async (data) => {
 
+  frames.forEach((frame) => {
+    frame.remove()
+  })
+
+  frames = []
+
   let promises = []
 
   data.forEach((d) => {
 
     let frame = new Frame(d)
-    frames.push = frame
+    frames.push(frame)
     promises.push(frame.load())
   })
 
@@ -145,37 +159,53 @@ const draw = async (data) => {
 
 let clock 
 
+function load() {
+  const currentTime = new Date()
+  let seconds = currentTime.getMinutes() * 60 + currentTime.getSeconds()
+  let limit = 60 * 2
+  let timeleft = limit - seconds % limit
+
+  if (timeleft < 3) {
+    fetchData()
+  }
+}
+
 function getRemainingTime() {
   const currentTime = new Date()
   let seconds = currentTime.getMinutes() * 60 + currentTime.getSeconds()
-  let fiveMin = 60 * 5
-  let timeleft = fiveMin - seconds % fiveMin
+  let limit = 60 * 2
+  let timeleft = limit - seconds % limit
 
-  return (timeleft/fiveMin) * 100
+  return (timeleft/limit) * 100
 }
 
 function pad(value) {
-  return ('0' + Math.floor(value)).slice(-2);
+  return ('0' + Math.floor(value)).slice(-2)
 }
 
 function showTime() {
   clock.style.width = `${(100-getRemainingTime())}%`
-
-  requestAnimationFrame(showTime);
+  requestAnimationFrame(showTime)
+  load()
 }
+
+const fetchData = () => {
+  fetch(`data.json?v=${Math.random() * 1000}`)
+    .then((response) => response.json())
+    .then(draw)
+    .catch((e) => {
+      console.error('Error loading the data')
+    })
+}
+
+window.f = fetchData
 
 const onLoad = () => {
   $canvas = document.querySelector('.Canvas')
   clock = document.getElementById('clock')
 
   requestAnimationFrame(showTime)
-
-  fetch('data.json')
-    .then((response) => response.json())
-    .then(draw)
-    .catch((e) => {
-      console.error('Error loading the data')
-    })
+  fetchData()
 }
 
 window.onload = onLoad
