@@ -46,16 +46,17 @@ class Frame {
     return new Promise(async(resolve) => {
       this.image = new Image()
 
-        this.image.onload = () => { 
-          this.image.draggable = false
-          resolve(this)
-        }
+      this.image.onload = () => { 
+        this.image.draggable = false
+        resolve(this)
+      }
 
       this.image.src = `img/${this.data.filename}`
     })
   }
 
-  onMouseMove (event) {
+  onMouseMove () {
+
     if (!this.isMouseDown) {
       return
     }
@@ -72,10 +73,10 @@ class Frame {
     this.isMouseDown = false
   }
 
-  onMouseDown (e) {
+  onMouseDown (event) {
     this.isMouseDown = true
-    this.mouseX = e.clientX
-    this.mouseY = e.clientY
+    this.mouseX = event.clientX
+    this.mouseY = event.clientY
     this.elementX = parseInt(this.image.style.left) || 0
     this.elementY = parseInt(this.image.style.top) || 0
   }
@@ -149,7 +150,6 @@ const draw = async (data) => {
       $canvas.appendChild(frame.image)
       frame.draggable()
 
-
       let delay = index === 0 ? 500 : Math.min(Math.random()*2000, index*500)
 
       setTimeout(() => {
@@ -159,12 +159,20 @@ const draw = async (data) => {
   })
 }
 
+const reposition = () => {
+  frames.forEach((frame) => {
+    let pos = getRandomPosition(frame.image)
+    frame.setPosition(pos.x, pos.y)
+  })
+}
+
+window.r = reposition
 let clock 
 
 function load() {
   const currentTime = new Date()
   let seconds = currentTime.getMinutes() * 60 + currentTime.getSeconds()
-  let limit = 60 * 2
+  let limit = 60 * 1 + 30
   let timeleft = limit - seconds % limit
 
   if (timeleft < 3) {
@@ -175,7 +183,7 @@ function load() {
 function getRemainingTime() {
   const currentTime = new Date()
   let seconds = currentTime.getMinutes() * 60 + currentTime.getSeconds()
-  let limit = 60 * 2
+  let limit = 60 * 1 + 30
   let timeleft = limit - seconds % limit
 
   return (timeleft/limit) * 100
