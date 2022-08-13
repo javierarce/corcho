@@ -46,13 +46,17 @@ const draw = async (data) => {
 
     window.document.body.style.height = `${height/2}px`
 
-    results.forEach((image) => {
+    results.forEach((image, index) => {
       let pos = getRandomPosition(image)
+
       image.style.top = `${pos.y}px`
       image.style.left = `${pos.x}px`
+
+      let delay = index === 0 ? 500 : Math.min(Math.random()*2000, index*500)
+
       setTimeout(() => {
         image.classList.add('is-loaded')
-      }, Math.random() * 2000)
+      }, delay)
     })
   })
 }
