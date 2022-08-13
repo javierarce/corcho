@@ -78,6 +78,8 @@ img {
   opacity: 0;
   visibility: hidden;
   transition: opacity 250ms ease-in-out;
+  max-width: 800px;
+  draggable: false;
 }
 
 img.is-loaded {
