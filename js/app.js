@@ -77,7 +77,7 @@ function pad(value) {
 }
 
 function showTime() {
-  clock.style.width = `${Math.round(100-getRemainingTime())}px`
+  clock.style.width = `${(100-getRemainingTime())}%`
   
   requestAnimationFrame(showTime);
 }
