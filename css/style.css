@@ -89,7 +89,7 @@ img.is-loaded {
 }
 
 .Clock {
-  position: absolute;
+  position: fixed;
   border-radius: 10px;
   overflow: hidden;
   right: 20px;
@@ -97,6 +97,7 @@ img.is-loaded {
   width: 100px;
   height: 4px;
   background: rgba(255, 255, 255, .2);
+  z-index: 100000;
 }
 
 #clock {
