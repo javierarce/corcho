@@ -1,4 +1,3 @@
-
 name: CI
 
 on:
@@ -14,7 +13,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
-        
+
       - name: Copy file via scp
         uses: appleboy/scp-action@master
         env:
@@ -24,6 +23,6 @@ jobs:
           KEY: ${{ secrets.SSHKEY }}
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
         with:
-          strip_components: 1
+          source: "."
           target: "/home/javier/canvas"
 
