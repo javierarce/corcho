@@ -61,8 +61,33 @@ const draw = async (data) => {
   })
 }
 
+let clock 
+
+function getRemainingTime() {
+  const currentTime = new Date()
+  let seconds = currentTime.getMinutes() * 60 + currentTime.getSeconds()
+  let fiveMin = 60 * 5
+  let timeleft = fiveMin - seconds % fiveMin
+
+  return (timeleft/fiveMin) * 100
+}
+
+function pad(value) {
+  return ('0' + Math.floor(value)).slice(-2);
+}
+
+function showTime() {
+  clock.style.width = `${Math.round(100-getRemainingTime())}px`
+  
+  requestAnimationFrame(showTime);
+}
+
 const onLoad = () => {
   $canvas = document.querySelector('.Canvas')
+  clock = document.getElementById('clock');
+
+  requestAnimationFrame(showTime);
+
   fetch('data.json')
     .then((response) => response.json())
     .then(draw)

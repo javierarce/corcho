@@ -84,3 +84,20 @@ img.is-loaded {
   opacity: 1;
   visibility: visible;
 }
+
+.Clock {
+  position: absolute;
+  border-radius: 10px;
+  overflow: hidden;
+  right: 20px;
+  top: 20px;
+  width: 100px;
+  height: 8px;
+  background: rgba(255, 255, 255, .2);
+}
+
+#clock {
+  height: 100%;
+  background: #fff;
+  transition: all 250ms ease-in-out;
+}
