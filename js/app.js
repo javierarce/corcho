@@ -43,6 +43,17 @@ class App {
 
 
   async draw (data) {
+
+    let md5 = data.md5
+
+    if (this.md5 === md5) {
+      this.spinner.hide()
+      this.loading = false
+      return
+    }
+
+    this.md5 = md5
+
     this.frames.forEach((frame) => {
       frame.remove()
     })
@@ -51,7 +62,7 @@ class App {
 
     let promises = []
 
-    data.forEach((d) => {
+    data.files.forEach((d) => {
       let frame = new Frame(d)
       this.frames.push(frame)
       promises.push(frame.load())

@@ -3,7 +3,8 @@ require('dotenv').config()
 const path = require('path')
 const fs = require('fs')
 const Extractor = require('figma-extractor')
-
+var md5 = require('md5');
+ 
 const DATA_FILE = 'data.json'
 const IMAGE_PATH= 'img'
 
@@ -25,7 +26,9 @@ fs.readdir(IMAGE_PATH, (err, files) => {
 })
 
 extractor.extract(IMAGE_PATH).then((files) => {
-  fs.writeFile(DATA_FILE, JSON.stringify(files), (error, content) => {
+  let data = JSON.stringify({ md5: md5(files), files })
+
+  fs.writeFile(DATA_FILE, data, (error, content) => {
     if (error) {
       console.error(e)
     }
