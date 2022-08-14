@@ -1,5 +1,3 @@
-let ZINDEX = 10
-
 class App {
   constructor () {
     this.spinner = new Spinner()
@@ -105,13 +103,3 @@ class App {
   }
 }
 
-const onLoad = () => {
-  let app = new App()
-  let clock = new Clock()
-
-  clock.$el.addEventListener('action', () => {
-    app.fetchData()
-  })
-}
-
-window.onload = onLoad
