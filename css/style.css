@@ -104,3 +104,40 @@ img.is-loaded {
   background: #fff;
   transition: all 250ms ease-in-out;
 }
+
+.Spinner {
+  left: calc(50% - 15px);
+  top: calc(50% - 15px);
+  transform: translate(-50%, -50%);
+  position: absolute;
+  border-top: 3px solid var(--white);
+  border-right: 3px solid var(--white);
+  border-bottom: 3px solid var(--white);
+  border-left: 3px solid var(--background);
+  animation: spinner 0.8s infinite linear;
+  transition: opacity 250ms ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10000000;
+}
+
+.Spinner.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.Spinner, .Spinner:after {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
