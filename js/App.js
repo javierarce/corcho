@@ -90,7 +90,14 @@ class App {
 
     this.clear()
 
-    this.pages = data.files.map((file, id) => { return { id, ...file }})
+    let pages = data.files.reduce((r, a) => {
+        r[a.page] = r[a.page] || []
+        r[a.page].push(a)
+        return r
+    }, Object.create(null))
+
+    this.pages = Object.entries(pages)
+
     this.pagination = new Pagination(this.pages)
     this.pagination.$element.addEventListener('action', (event) => {
       this.drawPage(event.detail.id)
@@ -106,11 +113,13 @@ class App {
     this.pagination.select(id)
 
     let promises = []
-    const page = this.pages[id]
-    const frame = new Frame(page)
+    let page = this.pages[id]
 
-    this.frames.push(frame)
-    promises.push(frame.load())
+    page[1].forEach((file, index) => {
+      const frame = new Frame(file)
+      this.frames.push(frame)
+      promises.push(frame.load())
+    })
 
     Promise.all(promises).then(this.loadFrames.bind(this))
   }

@@ -20,14 +20,14 @@ class Pagination {
     })
   }
 
-  addPage (page) {
+  addPage (page, index) {
     let $page = document.createElement('div')
     $page.classList.add(`${this.className}__page`)
-    $page.dataset.id = page.id
+    $page.dataset.id = index
 
     $page.onclick = () => {
-      this.select(page.id)
-      this.$element.dispatchEvent(new CustomEvent('action', { detail: { id: page.id } }))
+      this.select(index)
+      this.$element.dispatchEvent(new CustomEvent('action', { detail: { id: index } }))
     }
 
     if (page.id === 0) {
@@ -41,8 +41,8 @@ class Pagination {
     this.$element = document.createElement('div')
     this.className.split(' ').filter(c => c).forEach(name => this.$element.classList.add(name))
 
-    this.pages.forEach((page) => {
-      this.addPage(page)
+    this.pages.forEach((page, index) => {
+      this.addPage(page, index)
     })
 
     document.body.appendChild(this.$element)
