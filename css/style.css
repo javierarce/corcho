@@ -107,8 +107,8 @@ img.is-visible {
 }
 
 .Spinner {
-  left: 20px;
   top: 20px;
+  right: 20px;
   position: absolute;
   border-top: 3px solid var(--white);
   border-right: 3px solid var(--white);
