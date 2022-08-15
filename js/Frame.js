@@ -13,7 +13,7 @@ class Frame {
 
     setTimeout(() => {
       this.image.remove()
-    }, 500)
+    }, 400)
   }
 
   draggable () {
@@ -35,7 +35,7 @@ class Frame {
   }
 
   hide () {
-    this.image.classList.remove('is-loaded')
+    this.image.classList.remove('is-hidden')
   }
 
   load () {
@@ -52,7 +52,6 @@ class Frame {
   }
 
   onMouseMove () {
-
     if (!this.isMouseDown) {
       return
     }
