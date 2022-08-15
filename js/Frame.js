@@ -47,7 +47,7 @@ class Frame {
         resolve(this)
       }
 
-      this.image.src = `img/${this.data.filename}`
+      this.image.src = `img/${this.data.page}/${this.data.filename}`
     })
   }
 

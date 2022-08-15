@@ -63,6 +63,7 @@ class App {
     let promises = []
 
     data.files.forEach((d) => {
+      console.log(d)
       let frame = new Frame(d)
       this.frames.push(frame)
       promises.push(frame.load())

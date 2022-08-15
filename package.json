@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.1",
-    "figma-extractor": "^3.1.1",
+    "figma-extractor": "^3.1.2",
     "fs-extra": "^10.1.0",
     "md5": "^2.3.0"
   }

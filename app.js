@@ -1,32 +1,27 @@
 require('dotenv').config()
 
-const path = require('path')
 const fs = require('fs')
+const md5 = require('md5')
+const path = require('path')
 const Extractor = require('figma-extractor')
-var md5 = require('md5');
  
 const DATA_FILE = 'data.json'
 const IMAGE_PATH= 'img'
 
+const FIGMA_TOKEN = process.env.FIGMA_TOKEN
+const FIGMA_FILE = process.env.FIGMA_FILE
+
 const OPTIONS = {
   format: 'svg',
-  dont_overwrite: false
+  use_pages_as_folders: true
 }
 
-let extractor = new Extractor(process.env.FIGMA_TOKEN, process.env.FIGMA_FILE)
-
-fs.readdir(IMAGE_PATH, (err, files) => {
-  if (err) throw err;
-
-  for (const file of files) {
-    fs.unlink(path.join(IMAGE_PATH, file), err => {
-      if (err) throw err;
-    })
-  }
-})
+const extractor = new Extractor(FIGMA_TOKEN, FIGMA_FILE, OPTIONS)
 
 extractor.extract(IMAGE_PATH).then((files) => {
   let data = JSON.stringify({ md5: md5(files), files })
+
+  console.log(data)
 
   fs.writeFile(DATA_FILE, data, (error, content) => {
     if (error) {
