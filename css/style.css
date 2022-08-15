@@ -83,12 +83,7 @@ img {
   transition: opacity 250ms ease-in-out;
 }
 
-img.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-img.is-loaded {
+img.is-visible {
   opacity: 1;
   visibility: visible;
 }

@@ -5,6 +5,10 @@ class Frame {
     this.zIndex = ZINDEX
   }
 
+  getID () {
+    return this.data.id
+  }
+
   remove () {
     this.hide()
 
@@ -31,11 +35,11 @@ class Frame {
   }
 
   show () {
-    this.image.classList.add('is-loaded')
+    this.image.classList.add('is-visible')
   }
 
   hide () {
-    this.image.classList.remove('is-hidden')
+    this.image.classList.remove('is-visible')
   }
 
   load () {

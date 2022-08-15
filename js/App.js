@@ -13,20 +13,29 @@ class App {
 
   bindEvents () {
     document.body.onkeydown = (event) => {
-      let key = event.code
+      let key = event.key
 
       if (key === 'ArrowLeft') {
-        if (this.currentPage === 0) {
-          this.currentPage = this.pages.length
-        }
-        this.currentPage = (this.currentPage-1) % this.pages.length
-        this.drawPage(this.currentPage)
+        this.loadPrevPage()
       } else if (key === 'ArrowRight') {
-        this.currentPage = (this.currentPage+1) % this.pages.length
-        this.drawPage(this.currentPage)
+        this.loadNextPage()
+      } else if (key === 'r') {
+        this.fetchData()
       }
-
     }
+  }
+
+  loadPrevPage () {
+    if (this.currentPage === 0) {
+      this.currentPage = this.pages.length
+    }
+    this.currentPage = (this.currentPage-1) % this.pages.length
+    this.drawPage(this.currentPage)
+  }
+
+  loadNextPage () {
+    this.currentPage = (this.currentPage+1) % this.pages.length
+    this.drawPage(this.currentPage)
   }
 
   fetchData () {
@@ -103,22 +112,34 @@ class App {
       this.drawPage(event.detail.id)
     })
 
+    this.loadPages()
+
     this.drawPage(0)
   }
 
   drawPage (id) {
+    this.pagination.select(id)
+    this.frames.forEach((frame) => {
+      console.log(frame.getID(), id)
+      if (frame.getID() === id) {
+        frame.show()
+      } else {
+        frame.hide()
+      }
+    })
+  }
+
+  loadPages () {
 
     this.clear()
 
-    this.pagination.select(id)
-
     let promises = []
-    let page = this.pages[id]
-
-    page[1].forEach((file, index) => {
-      const frame = new Frame(file)
-      this.frames.push(frame)
-      promises.push(frame.load())
+    this.pages.forEach((page, id) => {
+      page[1].forEach((file) => {
+        const frame = new Frame({ id, ...file })
+        this.frames.push(frame)
+        promises.push(frame.load())
+      })
     })
 
     Promise.all(promises).then(this.loadFrames.bind(this))
@@ -150,12 +171,6 @@ class App {
       let pos = this.getCenterPosition(frame.image)
       frame.setPosition(pos.x, pos.y)
       frame.draggable()
-
-      let delay = index === 0 ? 500 : Math.min(Math.random()*2000, index*500)
-
-      setTimeout(() => {
-        frame.show()
-      }, delay)
     })
   }
 
