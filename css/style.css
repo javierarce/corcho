@@ -49,6 +49,7 @@ table {
 
 * {
   box-sizing: border-box;
+  touch-action: manipulation;
 }
 
 :root {
