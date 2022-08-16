@@ -13,6 +13,7 @@ const FIGMA_FILE = process.env.FIGMA_FILE
 
 const OPTIONS = {
   format: 'svg',
+  dont_overwrite: false,
   use_pages_as_folders: true
 }
 
