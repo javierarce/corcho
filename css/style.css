@@ -195,6 +195,14 @@ img.is-visible {
   left: auto;
 }
 
+.Navigate.is-left:hover {
+  cursor: w-resize;
+}
+
+.Navigate.is-right:hover {
+  cursor: e-resize;
+}
+
 /*.Navigate:hover:after {
   content: '';
   position: absolute;
