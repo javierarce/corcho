@@ -190,12 +190,17 @@ img.is-visible {
   cursor: pointer;
 }
 
-.Navigate:hover:after {
+.Navigate.is-right {
+  right: 0;
+  left: auto;
+}
+
+/*.Navigate:hover:after {
   content: '';
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 5%;
+  transform: translate(0, -50%);
   background: transparent url(../img/left.svg);
   background-size: contain;
   background-repeat: no-repeat;
@@ -203,13 +208,16 @@ img.is-visible {
   height: 100px;
 }
 
-.Navigate.is-right {
-  left: auto;
-  right: 0;
-}
-
 .Navigate.is-right:hover:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: auto;
+  right: 5%;;
+  transform: translate(0, -50%);
   background: transparent url(../img/right.svg);
   background-size: contain;
   background-repeat: no-repeat;
-}
+  width: 100px;
+  height: 100px;
+}*/
