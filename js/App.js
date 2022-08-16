@@ -9,6 +9,7 @@ class App {
 
     this.bindEvents()
     this.fetchData()
+    this.addNavigation()
   }
 
   bindEvents () {
@@ -38,6 +39,18 @@ class App {
     this.drawPage(this.currentPage)
   }
 
+  addNavigation () {
+    this.$left = document.createElement('div')
+    this.$left.classList.add('Navigate', 'is-left')
+    document.body.appendChild(this.$left)
+    this.$left.onclick = this.loadPrevPage.bind(this)
+
+    this.$right = document.createElement('div')
+    this.$right.classList.add('Navigate', 'is-right')
+    document.body.appendChild(this.$right)
+    this.$right.onclick = this.loadNextPage.bind(this)
+  }
+
   fetchData () {
     if (this.loading) {
       return
@@ -56,16 +69,9 @@ class App {
       })
   }
 
-  getCenterPosition (img) {
-    let imageRect = img.getBoundingClientRect()
-    let imageWidth = imageRect.width
-    let imageHeight = imageRect.height
-
-    let bodyWidth = window.innerWidth
-    let bodyHeight =  window.innerHeight
-
-    let x = bodyWidth/2 - imageWidth/2
-    let y = bodyHeight/2 - imageHeight/2
+  getCenterPosition (frame) {
+    let x = window.innerWidth/2 - frame.getWidth()/2
+    let y = window.innerHeight/2 - frame.getHeight()/2
 
     return { x, y }
   }
@@ -120,7 +126,6 @@ class App {
   drawPage (id) {
     this.pagination.select(id)
     this.frames.forEach((frame) => {
-      console.log(frame.getID(), id)
       if (frame.getID() === id) {
         frame.show()
       } else {
@@ -168,9 +173,6 @@ class App {
 
     results.forEach((frame, index) => {
       this.$canvas.appendChild(frame.image)
-      let pos = this.getCenterPosition(frame.image)
-      frame.setPosition(pos.x, pos.y)
-      frame.draggable()
     })
   }
 

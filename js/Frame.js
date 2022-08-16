@@ -9,6 +9,14 @@ class Frame {
     return this.data.id
   }
 
+  getWidth () {
+    return this.image.getBoundingClientRect().width
+  }
+
+  getHeight () {
+    return this.image.getBoundingClientRect().height
+  }
+
   remove () {
     this.hide()
 

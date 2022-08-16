@@ -56,7 +56,7 @@ table {
   --active: var(--white);
   --hover: var(--white);
   --text: var(--white);
-  --background: #0053DB;
+  --background: #000;
 }
 
 body {
@@ -75,11 +75,15 @@ body {
 }
 
 img {
+  max-width: 90vw;
   position: absolute;
+  top: 50%;
+  left: 50%;
+    transform: translate(-50%, -50%);
+
   opacity: 0;
   visibility: hidden;
   user-select: none;
-  cursor: grab;
   transition: opacity 250ms ease-in-out;
 }
 
@@ -172,3 +176,19 @@ img.is-visible {
   opacity: 1;
 }
 
+
+.Navigate {
+  position: fixed;
+  width: 20%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+
+.Navigate.is-right {
+  left: auto;
+  right: 0;
+}
