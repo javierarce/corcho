@@ -1,5 +1,7 @@
 # Corcho
 
+### How to run this thing
+
 1. Create a Figma file and add some pages with just one frame inside
 2. Grab the file ID and also generate a Figma Token
 3. Fork this project and add two secrets:
@@ -9,35 +11,3 @@
 
 Visit your GitHub page.
 
-### Workflow
-
-```yaml
-name: Cron
-on:
-  schedule:
-    - cron: "*/5 * * * *"      
-
-jobs:
-  cron:
-    name: Cron
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Use Node.js 15
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15
-
-      - name: Install and run
-        env:
-          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
-          FIGMA_FILE: ${{ secrets.FIGMA_FILE }}
-        run: yarn && node app.js
-
-      - uses: EndBug/add-and-commit@v7
-        with:
-          author_name: author
-          author_email: email
-          message: 'Cron'
-```
