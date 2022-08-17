@@ -1,4 +1,4 @@
-# Canvas
+# Corcho
 
 1. Create a Figma file and add some pages with just one frame inside
 2. Grab the file ID and also generate a Figma Token
