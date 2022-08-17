@@ -2,14 +2,12 @@
 
 ### How to run this thing
 
-1. Create a Figma file and add some pages with just one frame inside
-2. Fork this project and add two secrets:
-	1. FIGMA_FILE: for the file id
-	2. FIGMA_TOKEN: for your Figma Personal Access Token
-3. Enable GitHub pages for the main branch
-4. Enable the deploy workflow in the Actions tab
+1. Create a Figma file and add some pages with just one frame inside.
+2. Fork this project and add two secrets: `FIGMA_FILE` (for the file id) and `FIGMA_TOKEN` (for your Figma Personal Access Token).
+3. Enable GitHub pages for the main branch.
+4. And the deploy workflow inside the Actions tab.
 
-Every approximately 5 minutes the slideshow will get updated with the contents of the Figma file.
+Every 5-10 minutes the slideshow will get updated with the contents of the Figma file.
 
 ### Example
 
