@@ -11,3 +11,5 @@
 5. Visit the Actions tab and enable the workflow
 6. Wait until both the Cron workflow and the GitHub Pages workflow are finished 
 7. Visit your GitHub page
+
+Every approximately 5 minutes the slideshow will get automatically updated with the contents of the Figma file.
