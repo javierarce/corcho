@@ -1,6 +1,5 @@
 class Frame {
-  constructor (data, path, mobile) {
-    this.mobile = mobile
+  constructor (data, path) {
     this.imagePath = path
     this.isMouseDown = false
     this.data = data
@@ -45,7 +44,6 @@ class Frame {
 
       this.image.onload = () => { 
         this.image.draggable = false
-        this.image.dataset.mobile = this.mobile
         resolve(this)
       }
 

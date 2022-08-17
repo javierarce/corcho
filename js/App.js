@@ -155,17 +155,7 @@ class App {
     this.pages.forEach((page, id) => {
       page[1].forEach((file, index) => {
 
-        let isMobile = undefined
-
-        if (page[1].length == 1) {
-          isMobile = undefined
-        } else if (page[1].length > 1 && index === 0) {
-          isMobile = true
-        } else {
-          isMobile = false
-        }
-
-        const frame = new Frame({ id, ...file }, this.imagePath, isMobile)
+        const frame = new Frame({ id, ...file }, this.imagePath)
         this.frames.push(frame)
         promises.push(frame.load())
       })
