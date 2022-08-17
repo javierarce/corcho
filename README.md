@@ -35,7 +35,7 @@ jobs:
           FIGMA_FILE: ${{ secrets.FIGMA_FILE }}
         run: yarn && node app.js
 
-      - uses: Commit
+      - uses: EndBug/add-and-commit@v7
         with:
           author_name: author
           author_email: email
