@@ -13,3 +13,9 @@
 7. Visit your GitHub page
 
 Every approximately 5 minutes the slideshow will get automatically updated with the contents of the Figma file.
+
+
+### Example
+
+- [Figma file](https://www.figma.com/file/pCi2wnm9y4HsYNANvXRiGc/Corcho)
+- [Slideshow](https://javierarce.github.io/corcho)
