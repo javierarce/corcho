@@ -56,7 +56,7 @@ table {
   --white: #FFFFFF;
   --active: var(--white);
   --hover: var(--white);
-  --text: var(--white);
+  --text: var(--000);
   --background: #ddd;
 }
 
@@ -95,22 +95,9 @@ img.is-visible {
   visibility: visible;
 }
 
-.Clock {
-  position: fixed;
-  border-radius: 10px;
-  overflow: hidden;
-  right: 20px;
-  top: 20px;
-  width: 100px;
-  height: 4px;
-  background: rgba(255, 255, 255, .2);
-  z-index: 100000;
-}
-
-#clock {
-  height: 100%;
-  background: #fff;
-  transition: all 250ms ease-in-out;
+.Content {
+  padding: 20px;
+  color: var(--text);
 }
 
 .Spinner {
@@ -202,30 +189,3 @@ img.is-visible {
 .Navigate.is-right:hover {
   cursor: e-resize;
 }
-
-/*.Navigate:hover:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 5%;
-  transform: translate(0, -50%);
-  background: transparent url(../img/left.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 100px;
-  height: 100px;
-}
-
-.Navigate.is-right:hover:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: auto;
-  right: 5%;;
-  transform: translate(0, -50%);
-  background: transparent url(../img/right.svg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 100px;
-  height: 100px;
-}*/

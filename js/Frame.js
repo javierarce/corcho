@@ -1,8 +1,9 @@
 class Frame {
-  constructor (data) {
+  constructor (data, path, mobile) {
+    this.mobile = mobile
+    this.imagePath = path
     this.isMouseDown = false
     this.data = data
-    this.zIndex = ZINDEX
   }
 
   getID () {
@@ -20,26 +21,14 @@ class Frame {
   remove () {
     this.hide()
 
-    document.removeEventListener('mousemove', this.onMouseMove.bind(this))
-    document.removeEventListener('mouseup', this.onMouseExit.bind(this))
-
     setTimeout(() => {
       this.image.remove()
     }, 400)
   }
 
-  draggable () {
-    this.image.addEventListener('mousedown', this.onMouseDown.bind(this))
-    this.image.addEventListener('mouseup', this.onMouseUp.bind(this))
-    this.image.addEventListener('mouseover', this.onMouseOver.bind(this))
-    document.addEventListener('mousemove', this.onMouseMove.bind(this))
-    document.addEventListener('mouseup', this.onMouseExit.bind(this))
-  }
-
   setPosition (x, y) {
     this.image.style.left = `${x}px`
     this.image.style.top = `${y}px`
-    this.image.style.zIndex = this.zIndex
   }
 
   show () {
@@ -56,10 +45,11 @@ class Frame {
 
       this.image.onload = () => { 
         this.image.draggable = false
+        this.image.dataset.mobile = this.mobile
         resolve(this)
       }
 
-      this.image.src = `img/${this.data.page}/${this.data.filename}`
+      this.image.src = `${this.imagePath}/${this.data.page}/${this.data.filename}`
     })
   }
 
@@ -74,29 +64,5 @@ class Frame {
     this.top = this.elementY + deltaY
 
     this.setPosition(this.left, this.top)
-  }
-
-  onMouseUp () {
-    this.isMouseDown = false
-  }
-
-  onMouseDown (event) {
-    this.isMouseDown = true
-    this.mouseX = event.clientX
-    this.mouseY = event.clientY
-    this.elementX = parseInt(this.image.style.left) || 0
-    this.elementY = parseInt(this.image.style.top) || 0
-  }
-
-  onMouseExit () {
-    this.isMouseDown = false
-    this.elementX = parseInt(this.image.style.left) || 0
-    this.elementY = parseInt(this.image.style.top) || 0
-  }
-
-  onMouseOver () {
-    this.zIndex = (ZINDEX + 1) % 1000
-    ZINDEX = this.zIndex
-    this.image.style.zIndex = this.zIndex
   }
 }

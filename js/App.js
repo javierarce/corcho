@@ -3,8 +3,8 @@ class App {
     this.spinner = new Spinner()
     this.loading = false
     this.frames = []
-    this.$canvas = document.querySelector('.Canvas')
     this.pages = []
+    this.$canvas = document.querySelector('.Canvas')
     this.currentPage = 0
 
     this.bindEvents()
@@ -30,6 +30,7 @@ class App {
     if (this.currentPage === 0) {
       this.currentPage = this.pages.length
     }
+
     this.currentPage = (this.currentPage-1) % this.pages.length
     this.drawPage(this.currentPage)
   }
@@ -37,6 +38,14 @@ class App {
   loadNextPage () {
     this.currentPage = (this.currentPage+1) % this.pages.length
     this.drawPage(this.currentPage)
+  }
+
+  updateURL () {
+    if (this.currentPage === 0) {
+      window.history.pushState('', this.currentPage, `/`);
+    } else {
+      window.history.pushState(this.currentPage, this.currentPage, `/${this.currentPage}`);
+    }
   }
 
   addNavigation () {
@@ -102,6 +111,7 @@ class App {
     }
 
     this.md5 = md5
+    this.imagePath = data.path
 
     this.clear()
 
@@ -119,11 +129,13 @@ class App {
     })
 
     this.loadPages()
-
-    this.drawPage(0)
+    this.drawPage(this.currentPage)
   }
 
   drawPage (id) {
+
+    id = id >= this.pages.length ? 0 : id
+
     this.pagination.select(id)
     this.frames.forEach((frame) => {
       if (frame.getID() === id) {
@@ -139,9 +151,21 @@ class App {
     this.clear()
 
     let promises = []
+
     this.pages.forEach((page, id) => {
-      page[1].forEach((file) => {
-        const frame = new Frame({ id, ...file })
+      page[1].forEach((file, index) => {
+
+        let isMobile = undefined
+
+        if (page[1].length == 1) {
+          isMobile = undefined
+        } else if (page[1].length > 1 && index === 0) {
+          isMobile = true
+        } else {
+          isMobile = false
+        }
+
+        const frame = new Frame({ id, ...file }, this.imagePath, isMobile)
         this.frames.push(frame)
         promises.push(frame.load())
       })
