@@ -1,28 +1,28 @@
-name: CI
-
+name: Cron
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron: "*/5 * * * *"      
 
 jobs:
-  build:
+  cron:
+    name: Cron
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
+      - uses: actions/checkout@v2
 
-      - name: Copy file via scp
-        uses: appleboy/scp-action@master
-        env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          PORT: ${{ secrets.PORT }}
-          KEY: ${{ secrets.SSHKEY }}
-          PASSPHRASE: ${{ secrets.PASSPHRASE }}
+      - name: Use Node.js 15
+        uses: actions/setup-node@v1
         with:
-          source: "."
-          target: "/home/javier/canvas"
+          node-version: 15
 
+      - name: Install and run
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+          FIGMA_FILE: ${{ secrets.FIGMA_FILE }}
+        run: yarn && node app.js
+
+      - uses: Commit
+        with:
+          author_name: javierarce
+          author_email: 4933+javierarce@users.noreply.github.com
+          message: 'Cron'
