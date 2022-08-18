@@ -56,8 +56,8 @@ table {
   --white: #FFFFFF;
   --active: var(--white);
   --hover: var(--white);
-  --text: var(--000);
-  --background: #ddd;
+  --text: #000000;
+  --background: #DDDDDD;
 }
 
 body {
@@ -73,6 +73,10 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--text);
 }
 
 img {
