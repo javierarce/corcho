@@ -102,7 +102,7 @@ img.is-visible {
 
 .Spinner {
   top: 20px;
-  right: 20px;
+  left: 20px;
   position: absolute;
   border-top: 3px solid var(--white);
   border-right: 3px solid var(--white);
@@ -189,3 +189,113 @@ img.is-visible {
 .Navigate.is-right:hover {
   cursor: e-resize;
 }
+
+.Comment {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: var(--white);
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  border: none;
+  cursor: pointer;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 250ms ease-in-out;
+  z-index: 10000000;
+
+  background: var(--white) url(../img/message.svg);
+  background-size: 19px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+.Comment.is-open .Comment__comment {
+  opacity: 1;
+  visibility: visible;
+}
+
+.Comment__commentMessage:last-child {
+  border-bottom: none;
+}
+
+.Comment__commentMessage {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.8em;
+  line-height: 1.45;
+}
+
+.Comment__badge {
+  position: absolute;
+  font-size: 0.6em;
+  top: -7px;
+  right: -7px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  background: red;
+  color: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.Comment__comment {
+  position: fixed;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 250ms ease-in-out;
+  top: 20px;
+  right: 80px;
+  max-width: 400px;
+  text-align: left;
+
+  background: var(--white);
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  border: none;
+  cursor: default;
+}
+
+.Comment.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.Backdrop {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 250ms ease-in-out;
+  z-index: 10000;
+}
+
+.Backdrop.is-visible {
+  opacity: 0.4;
+  visibility: visible;
+}
+
+@media only screen and (max-width: 640px){
+  .Comment__comment {
+    position: fixed;
+    top: 90px;
+    right: auto;
+    width: calc(100% - 40px);
+    height: auto;
+    left: 20px;
+  }
+}
+

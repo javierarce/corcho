@@ -13,7 +13,8 @@ const FIGMA_FILE = process.env.FIGMA_FILE
 
 const OPTIONS = {
   format: 'svg',
-  use_pages_as_folders: true
+  use_pages_as_folders: true,
+  get_comments: true
 }
 
 fs.rmSync(IMAGE_PATH, { recursive: true, force: true })

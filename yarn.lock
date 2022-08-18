@@ -164,10 +164,10 @@ express@^4.17.1:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-figma-extractor@^3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/figma-extractor/-/figma-extractor-3.1.3.tgz#07e9640890345d60bf9f19bf9af60117ea0367c4"
-  integrity sha512-mG95VROiAZ4Nq+ow3V6moUMVqLTpnMNtK6VaYoeCsrMFmRrDcFes4VJI3a7BW/5jW1CRQhMSsU64avnJ4FKlOg==
+figma-extractor@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/figma-extractor/-/figma-extractor-3.1.5.tgz#47ddf5f4308300df212a791056e30f5f74c48644"
+  integrity sha512-+XTk95LK+blFmqrjBoCppfdqfLrPZcHRkGLNQuFRRhm7ncH1kuKW6Qrr93o2K1Sfm1H+e7n8ze8Bjwtn61Ef1Q==
   dependencies:
     express "^4.17.1"
     figma-js "^1.13.0"

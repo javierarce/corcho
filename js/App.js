@@ -75,6 +75,10 @@ class App {
         this.loading = false
         this.spinner.hide()
         console.error(`Error loading the data: ${e}`)
+        let $error = document.createElement('div')
+        $error.classList.add('Error')
+        $error.innerHTML = "Oh, no"
+        document.body.appendChild($error)
       })
   }
 

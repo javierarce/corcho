@@ -3,6 +3,10 @@ class Frame {
     this.imagePath = path
     this.isMouseDown = false
     this.data = data
+
+    if (this.data.comments) {
+      this.comment = new Comment(this.data.comments)
+    }
   }
 
   getID () {
@@ -31,10 +35,18 @@ class Frame {
   }
 
   show () {
+    if (this.comment) {
+      setTimeout(() => {
+        this.comment.show()
+      }, 120)
+    }
     this.image.classList.add('is-visible')
   }
 
   hide () {
+    if (this.comment) {
+      this.comment.hide()
+    }
     this.image.classList.remove('is-visible')
   }
 
