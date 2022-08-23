@@ -25,6 +25,6 @@ jobs:
 
       - uses: EndBug/add-and-commit@v7
         with:
-          author_name: javierarce
-          author_email: 4933+javierarce@users.noreply.github.com
+          author_name: author_name
+          author_email: email@users.noreply.github.com
           message: 'Cron'
