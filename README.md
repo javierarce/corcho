@@ -1,6 +1,6 @@
 # Corcho
 
-Corcho (/ˈkoɾt͡ʃo/) is a tool that allows you to create and sync web slideshows from a Figma file. You can then use GitHub pages to host your slideshow and have it automatically updated using GitHub Actions.
+Corcho (/ˈkoɾt͡ʃo/) is a tool that creates and sync web slideshows using the contents of a Figma file. You can then use GitHub Pages to host your slideshow on the web and have it automatically updated using GitHub Actions.
 
 ### How to run this thing
 
