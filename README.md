@@ -12,7 +12,18 @@ Corcho (/ˈkoɾt͡ʃo/) is a tool that creates and sync web slideshows using the
   - GitHub pages for the `main` branch.
   - The deploy workflow (by visiting the Actions tab).
 
-Every 5-10 minutes the slideshow will get updated with the contents of the Figma file.
+### Customization
+
+By default the cronjob of the GitHub Action will run every hour on the hour, but you can change the scheduling to be more frequent. Here's an example of a job that gets executed every 5 minutes:
+
+```
+name: Cron
+on:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: "*/5 * * * *"      
+```
 
 ### Example
 
