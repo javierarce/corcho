@@ -6,25 +6,25 @@ Corcho (/ˈkoɾt͡ʃo/) is a tool that creates and sync web slideshows using the
 
 1. Create a file in Figma and add some pages with just one frame inside.
 2. Create a [Figma personal access token](https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-tokens).
-3. Copy the file id of your Figma file (which is the string of random alphanumeric characters found in the URL after figma.com/file)
+3. Copy the file id of your Figma file (which is the string of random alphanumeric characters found in the URL after `figma.com/file`)
 
 ### On GitHub Pages
 
 1. Fork this project and add two secrets: 
   - `FIGMA_FILE`: with the file id.
   - `FIGMA_TOKEN`: with your Figma Personal Access Token.
-3. Enable:
+2. Enable:
   - GitHub pages for the `main` branch.
   - The deploy workflow (by visiting the Actions tab).
 
 ### Locally
 
-2. Clone this project
-3. Rename the `.env.sample` file to `.env` and update it:
+1. Clone this project
+2. Rename the `.env.sample` file to `.env` and update it:
   - `FIGMA_FILE`: with the file id.
   - `FIGMA_TOKEN`: with your Figma Personal Access Token.
-4. Install the dependencies with `yarn install` or `npm install`
-5. Run the project with `yarn start` or `npm run start`
+3. Install the dependencies with `yarn install` or `npm install`
+4. Run the project with `yarn start` or `npm run start`
 
 #### Customization
 
