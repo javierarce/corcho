@@ -6,7 +6,7 @@ const path = require('path')
 const Extractor = require('figma-extractor')
 
 const DATA_FILE = 'data.json'
-const IMAGE_PATH= 'data'
+const IMAGE_PATH = 'data'
 
 const FIGMA_TOKEN = process.env.FIGMA_TOKEN
 const FIGMA_FILE = process.env.FIGMA_FILE
@@ -22,7 +22,7 @@ fs.rmSync(IMAGE_PATH, { recursive: true, force: true })
 const extractor = new Extractor(FIGMA_TOKEN, FIGMA_FILE, OPTIONS)
 
 extractor.extract(IMAGE_PATH).then((files) => {
-  let data = JSON.stringify({ md5: md5(files), path: IMAGE_PATH, files })
+  const data = JSON.stringify({ md5: md5(files), path: IMAGE_PATH, files })
 
   console.log(data)
 
@@ -34,4 +34,3 @@ extractor.extract(IMAGE_PATH).then((files) => {
 }).catch((e) => {
   console.error(e)
 })
-
