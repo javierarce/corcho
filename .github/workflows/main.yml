@@ -14,12 +14,12 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
       - name: Run application
         env:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
           FIGMA_FILE: ${{ secrets.FIGMA_FILE }}
-        run: node app.js
+        run: npm run start
       - uses: EndBug/add-and-commit@v9
         with:
           message: "Cron: Automated update"
