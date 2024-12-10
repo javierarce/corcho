@@ -420,6 +420,11 @@ class App {
     });
   }
 
+  updatePageTitle() {
+    const currentPage = this.pages[this.currentPageID];
+    document.title = `${currentPage[0]} - Corcho`;
+  }
+
   loadFramesByPageID(pageID) {
     this.clear();
 
@@ -427,10 +432,7 @@ class App {
 
     const frames = this.pages[pageID][1];
 
-    if (frames.length > 1) {
-    } else {
-    }
-
+    this.updatePageTitle();
     this.startLoading();
 
     const reversedFrames = [...frames].reverse();
