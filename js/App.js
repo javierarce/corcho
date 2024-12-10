@@ -222,8 +222,8 @@ class App {
         this.loadNextFrame();
         break;
 
-      case "KeyR":
-        this.fetchData();
+      case "KeyC":
+        this.comments.onClick(event);
         break;
 
       case "PageDown":

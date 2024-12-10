@@ -2,6 +2,7 @@ class Comments {
   constructor() {
     this.className = this.constructor.name.toLowerCase();
     this.isOpen = false;
+    this.comments = [];
 
     this.bindEvents();
     this.render();
@@ -20,7 +21,8 @@ class Comments {
   }
 
   show(comments) {
-    this.displayComments(comments);
+    this.comments = comments;
+    this.displayComments();
     this.$element.classList.add("is-visible");
   }
 
@@ -32,6 +34,7 @@ class Comments {
   }
 
   close() {
+    this.comments = [];
     this.isOpen = false;
     this.$element.classList.remove("is-open");
     this.$element.dispatchEvent(new CustomEvent("comments-closed"));
@@ -40,6 +43,10 @@ class Comments {
   onClick(event) {
     event.preventDefault();
     event.stopPropagation();
+
+    if (!this.comments.length) {
+      return;
+    }
 
     this.isOpen = !this.isOpen;
 
@@ -59,14 +66,14 @@ class Comments {
     });
   }
 
-  displayComments(comments) {
+  displayComments() {
     this.$comment = document.createElement("div");
     this.$comment.classList.add(`${this.className}__comment`);
     this.$comment.onclick = (event) => {
       event.stopPropagation();
     };
 
-    comments.forEach((comment) => {
+    this.comments.forEach((comment) => {
       let $comment = document.createElement("div");
       $comment.classList.add(`${this.className}__commentMessage`);
       $comment.innerHTML = this.urlify(comment).replace("\n", "<br /><br />");
@@ -75,7 +82,7 @@ class Comments {
 
     this.$badge = document.createElement("div");
     this.$badge.classList.add(`${this.className}__badge`);
-    this.$badge.textContent = comments.length;
+    this.$badge.textContent = this.comments.length;
     this.$element.appendChild(this.$badge);
     this.$element.appendChild(this.$comment);
 

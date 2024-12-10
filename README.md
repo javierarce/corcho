@@ -56,7 +56,7 @@ on:
 | `Tab`                 | Open navigation   |
 | `F`                   | Toggle fullscreen |
 | `Esc`                 | Exit fullscreen   |
-| `R`                   | Refresh data      |
+| `C`                   | Toggle comments   |
 
 ### When the navigation is open
 
