@@ -1,7 +1,5 @@
 name: Cron
 on:
-  push:
-    branches: [ "main" ]
   schedule:
     - cron: "*/5 * * * *"  # Runs every 5 minutes
 
@@ -10,11 +8,11 @@ jobs:
     name: Cron
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3  # Updated to v3
+      - uses: actions/checkout@v3
       - name: Use Node.js
-        uses: actions/setup-node@v3  # Updated to v3
+        uses: actions/setup-node@v3
         with:
-          node-version: 16  # Updated to a more recent LTS version
+          node-version: 16
       - name: Install dependencies
         run: yarn install
       - name: Run application
@@ -22,6 +20,6 @@ jobs:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
           FIGMA_FILE: ${{ secrets.FIGMA_FILE }}
         run: node app.js
-      - uses: EndBug/add-and-commit@v9  # Updated to v9
+      - uses: EndBug/add-and-commit@v9
         with:
           message: 'Cron: Automated update'
