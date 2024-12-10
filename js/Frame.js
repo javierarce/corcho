@@ -63,7 +63,7 @@ class Frame {
         resolve(this);
       };
 
-      this.image.src = `/${this.imagePath}/${this.data.page}/${this.data.filename}?${Date.now()}`;
+      this.image.src = `${this.imagePath}/${this.data.page}/${this.data.filename}?${Date.now()}`;
     });
   }
 }
