@@ -198,14 +198,17 @@ class App {
 
     switch (event.code) {
       case "Space" && event.shiftKey:
+        event.preventDefault();
         this.loadPrevFrame();
         break;
 
       case "ArrowLeft":
+        event.preventDefault();
         this.loadPrevFrame();
         break;
 
       case "ArrowRight":
+        event.preventDefault();
         this.loadNextFrame();
         break;
 
@@ -215,6 +218,7 @@ class App {
         break;
 
       case "Space":
+        event.preventDefault();
         this.loadNextFrame();
         break;
 
