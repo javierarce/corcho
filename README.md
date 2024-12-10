@@ -22,7 +22,9 @@ Corcho (/ˈkoɾt͡ʃo/) is a tool that creates and sync web slideshows using the
 
 #### Customization
 
-By default the cronjob of the GitHub Action will run every hour on the hour, but you can change the scheduling to be more frequent. Here's an example of a job that gets executed every 5 minutes:
+By default the cronjob of the GitHub Action will run every hour on the hour,
+but you can change the scheduling to be more frequent. Here's an example of a
+job that gets executed every 5 minutes (which is the shortest interval allowed):
 
 ```
 name: Cron
@@ -30,8 +32,13 @@ on:
   push:
     branches: [ "main" ]
   schedule:
-    - cron: "*/5 * "*
+    - cron: "*/5 * * * *" # Runs every 5 minutes
 ```
+
+Also, please note that free accounts have a limit of 500 MB and 2,000
+minutes of run time per month. Please check the [included storage and
+minutes](https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-actions/about-billing-for-github-actions#included-storage-and-minutes)
+available for your account type.
 
 ### Locally
 
