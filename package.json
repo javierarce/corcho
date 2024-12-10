@@ -1,20 +1,20 @@
 {
   "name": "Corcho",
-    "version": "1.0.0",
-    "description": "A tool to create and sync web slideshows with Figma",
-    "license" : "MIT",
-    "main": "app.js",
-    "author": {
-      "name": "Javier Arce",
-      "email": "javierarce@gmail.com",
-      "url": "https://javier.computer"
-    },
-    "scripts": {
-      "start": "node app.js"
-    },
-    "dependencies": {
-      "dotenv": "^16.0.1",
-      "figma-extractor": "^3.1.5",
-      "md5": "^2.3.0"
-    }
+  "version": "1.0.0",
+  "description": "A tool to create and sync web slideshows with Figma",
+  "license": "MIT",
+  "main": "app.js",
+  "author": {
+    "name": "Javier Arce",
+    "email": "javierarce@gmail.com",
+    "url": "https://javier.computer"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "figma-extractor": "^3.2.0",
+    "md5": "^2.3.0"
+  }
 }

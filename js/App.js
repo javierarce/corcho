@@ -1,204 +1,469 @@
 class App {
-  constructor () {
-    this.spinner = new Spinner()
-    this.loading = false
-    this.frames = []
-    this.pages = []
-    this.$canvas = document.querySelector('.Canvas')
-    this.currentPage = 0
+  constructor() {
+    this.spinner = new Spinner();
+    this.loading = false;
+    this.currentFrames = [];
+    this.pages = [];
+    this.$canvas = document.querySelector(".canvas");
+    this.currentPageID = 0;
+    this.currentFrameID = 0;
+    this.backdrop = new Backdrop();
 
-    this.bindEvents()
-    this.fetchData()
-    this.addNavigation()
+    this.comments = new Comments();
+
+    this.handleCommentsShow = this.handleCommentsShow.bind(this);
+    this.handleCommentsHide = this.handleCommentsHide.bind(this);
+
+    this.bindEvents();
+    this.fetchData();
   }
 
-  bindEvents () {
-    document.body.onkeydown = (event) => {
-      let key = event.key
+  bindEvents() {
+    document.body.addEventListener("mousemove", this.onMouseMove.bind(this));
+    document.body.addEventListener("mouseleave", this.onMouseLeave.bind(this));
+    document.body.addEventListener("click", this.onCanvasClick.bind(this));
+    document.body.addEventListener("keydown", this.onKeyDown.bind(this));
+    document.addEventListener(
+      "fullscreenchange",
+      this.onFullscreenChange.bind(this),
+    );
+    this.backdrop.$element.addEventListener("backdrop-click", () => {
+      this.comments.close();
+    });
+    this.bindCommentsEvents();
+  }
 
-      if (key === 'ArrowLeft') {
-        this.loadPrevPage()
-      } else if (key === 'ArrowRight') {
-        this.loadNextPage()
-      } else if (key === 'r') {
-        this.fetchData()
-      }
+  bindCommentsEvents() {
+    this.comments.$element.addEventListener("comments-open", () => {
+      this.backdrop.show();
+      document.body.classList.add("comments-open");
+    });
+
+    this.comments.$element.addEventListener("comments-closed", () => {
+      this.backdrop.hide();
+      document.body.classList.remove("comments-open");
+    });
+  }
+
+  bindFrameEvents(frame) {
+    if (this.previousFrame) {
+      this.previousFrame.image.removeEventListener(
+        "comments-show",
+        this.handleCommentsShow,
+      );
+      this.previousFrame.image.removeEventListener(
+        "comments-hide",
+        this.handleCommentsHide,
+      );
+    }
+
+    frame.image.addEventListener("comments-show", this.handleCommentsShow);
+    frame.image.addEventListener("comments-hide", this.handleCommentsHide);
+  }
+
+  handleCommentsShow(event) {
+    if (event && event.detail && event.detail.comments) {
+      const comments = event.detail.comments;
+      this.comments.show(comments);
     }
   }
 
-  loadPrevPage () {
-    if (this.currentPage === 0) {
-      this.currentPage = this.pages.length
-    }
-
-    this.currentPage = (this.currentPage-1) % this.pages.length
-    this.drawPage(this.currentPage)
+  handleCommentsHide() {
+    this.comments.hide();
   }
 
-  loadNextPage () {
-    this.currentPage = (this.currentPage+1) % this.pages.length
-    this.drawPage(this.currentPage)
-  }
-
-  updateURL () {
-    if (this.currentPage === 0) {
-      window.history.pushState('', this.currentPage, `/`);
+  onFullscreenChange() {
+    this.isFullscreen = !!document.fullscreenElement;
+    if (this.isFullscreen) {
+      document.body.classList.add("is-fullscreen");
     } else {
-      window.history.pushState(this.currentPage, this.currentPage, `/${this.currentPage}`);
+      document.body.classList.remove("is-fullscreen");
     }
   }
 
-  addNavigation () {
-    this.$left = document.createElement('div')
-    this.$left.classList.add('Navigate', 'is-left')
-    document.body.appendChild(this.$left)
-    this.$left.onclick = this.loadPrevPage.bind(this)
-
-    this.$right = document.createElement('div')
-    this.$right.classList.add('Navigate', 'is-right')
-    document.body.appendChild(this.$right)
-    this.$right.onclick = this.loadNextPage.bind(this)
+  toggleFullscreen() {
+    if (!this.isFullscreen) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.warn(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      document.exitFullscreen().catch((err) => {
+        console.warn(`Error attempting to exit fullscreen: ${err.message}`);
+      });
+    }
   }
 
-  fetchData () {
+  addThumbnails(pages, path) {
+    this.thumbs = new Thumbs(pages, path);
+    document.body.appendChild(this.thumbs.render());
+
+    this.thumbs.$element.addEventListener(
+      "thumb-clicked",
+      this.onThumbClick.bind(this),
+    );
+    this.thumbs.$element.addEventListener(
+      "thumbs-open",
+      this.onThumbsOpen.bind(this),
+    );
+    this.thumbs.$element.addEventListener(
+      "thumbs-closed",
+      this.onThumbsClosed.bind(this),
+    );
+  }
+
+  onThumbsOpen() {
+    document.body.classList.add("thumbs-open");
+  }
+
+  onThumbsClosed() {
+    document.body.classList.remove("thumbs-open");
+  }
+
+  onThumbClick(event) {
+    this.thumbs.hide();
+
+    setTimeout(() => {
+      this.currentPageID = +event.detail.id;
+      this.thumbs.setPageID(this.currentPageID);
+      this.currentFrameID = 0;
+      this.loadFramesByPageID(this.currentPageID);
+      this.pagination.updatePages(this.currentFrames);
+      this.drawFrame(this.currentFrameID);
+    }, 200);
+  }
+
+  onMouseMove(event) {
+    const halfWidth = window.innerWidth / 2;
+    if (event.clientX < halfWidth) {
+      document.body.classList.remove("cursor-right");
+      document.body.classList.add("cursor-left");
+    } else {
+      document.body.classList.remove("cursor-left");
+      document.body.classList.add("cursor-right");
+    }
+  }
+
+  onMouseLeave() {
+    document.body.classList.remove("cursor-left", "cursor-right");
+  }
+
+  onCanvasClick(event) {
+    if (this.thumbs.isOpen) {
+      return;
+    }
+
+    const halfWidth = window.innerWidth / 2;
+    if (event.clientX < halfWidth) {
+      this.loadPrevFrame();
+    } else {
+      this.loadNextFrame();
+    }
+  }
+
+  onKeyDown(event) {
+    if (this.thumbs.isOpen) {
+      switch (event.code) {
+        case "Tab":
+        case "Space":
+          event.preventDefault();
+          if (event.shiftKey) {
+            this.thumbs.prev();
+          } else {
+            this.thumbs.next();
+          }
+          break;
+
+        case "ArrowLeft":
+          event.preventDefault();
+          this.thumbs.prev();
+          break;
+
+        case "ArrowRight":
+          event.preventDefault();
+          this.thumbs.next();
+          break;
+
+        case "Enter":
+          event.preventDefault();
+          this.thumbs.selectCurrentThumb();
+          break;
+
+        case "Escape":
+          event.preventDefault();
+          this.thumbs.hide();
+          break;
+      }
+      return;
+    }
+
+    switch (event.code) {
+      case "Space" && event.shiftKey:
+        this.loadPrevFrame();
+        break;
+
+      case "ArrowLeft":
+        this.loadPrevFrame();
+        break;
+
+      case "ArrowRight":
+        this.loadNextFrame();
+        break;
+
+      case "Tab":
+        event.preventDefault();
+        this.thumbs.show(this.currentPageID);
+        break;
+
+      case "Space":
+        this.loadNextFrame();
+        break;
+
+      case "KeyR":
+        this.fetchData();
+        break;
+
+      case "PageDown":
+      case "KeyJ":
+        this.loadNextPage();
+        break;
+
+      case "PageUp":
+      case "KeyK":
+        this.loadPrevPage();
+        break;
+
+      case "KeyF":
+        event.preventDefault();
+        this.toggleFullscreen();
+        break;
+      case "Escape":
+        if (this.isFullscreen) {
+          document.exitFullscreen().catch(console.warn);
+        }
+        break;
+    }
+  }
+
+  loadPrevPage() {
+    this.currentFrameID = 0;
+
+    if (this.currentPageID === 0) {
+      this.currentPageID = this.pages.length;
+    }
+
+    this.currentPageID = (this.currentPageID - 1) % this.pages.length;
+    this.thumbs.setPageID(this.currentPageID);
+
+    this.loadFramesByPageID(this.currentPageID);
+    this.pagination.updatePages(this.currentFrames);
+    this.drawFrame(this.currentFrameID);
+  }
+
+  loadNextPage() {
+    this.currentFrameID = 0;
+    this.currentPageID = (this.currentPageID + 1) % this.pages.length;
+    this.thumbs.setPageID(this.currentPageID);
+    this.loadFramesByPageID(this.currentPageID);
+    this.pagination.updatePages(this.currentFrames);
+    this.drawFrame(this.currentFrameID);
+  }
+
+  loadPrevFrame() {
+    if (this.currentFrameID === 0) {
+      this.currentFrameID = this.currentFrames.length;
+    }
+
+    this.currentFrameID = (this.currentFrameID - 1) % this.currentFrames.length;
+    this.pagination.select(this.currentFrameID);
+    this.drawFrame(this.currentFrameID);
+  }
+
+  loadNextFrame() {
+    this.currentFrameID = (this.currentFrameID + 1) % this.currentFrames.length;
+    this.pagination.select(this.currentFrameID);
+    this.drawFrame(this.currentFrameID);
+  }
+
+  updateURL() {
+    if (this.currentPageID === 0) {
+      window.history.pushState("", this.currentPageID, `/`);
+    } else {
+      window.history.pushState(
+        this.currentPageID,
+        this.currentPageID,
+        `/${this.currentPageID}`,
+      );
+    }
+  }
+
+  startLoading() {
+    document.body.classList.add("is-loading");
+    this.loading = true;
+    this.spinner.show();
+  }
+
+  stopLoading() {
+    document.body.classList.remove("is-loading");
+    this.loading = false;
+    this.spinner.hide();
+  }
+
+  showErrorMessage(e) {
+    this.stopLoading();
+    console.error(`Error loading the data: ${e}`);
+
+    let $error = document.createElement("div");
+    $error.classList.add("Error");
+    $error.innerHTML = "Oh, no";
+    document.body.appendChild($error);
+  }
+
+  fetchData() {
     if (this.loading) {
-      return
+      return;
     }
 
-    this.loading = true
-    this.spinner.show()
+    this.startLoading();
 
     fetch(`data.json?v=${Math.random() * 1000}`)
       .then((response) => response.json())
       .then(this.draw.bind(this))
       .catch((e) => {
-        this.loading = false
-        this.spinner.hide()
-        console.error(`Error loading the data: ${e}`)
-        let $error = document.createElement('div')
-        $error.classList.add('Error')
-        $error.innerHTML = "Oh, no"
-        document.body.appendChild($error)
-      })
+        this.showErrorMessage(e);
+      });
   }
 
-  getCenterPosition (frame) {
-    let x = window.innerWidth/2 - frame.getWidth()/2
-    let y = window.innerHeight/2 - frame.getHeight()/2
+  getCenterPosition(frame) {
+    let x = window.innerWidth / 2 - frame.getWidth() / 2;
+    let y = window.innerHeight / 2 - frame.getHeight() / 2;
 
-    return { x, y }
+    return { x, y };
   }
 
-  getRandomPosition (img) {
-    let imageRect = img.getBoundingClientRect()
-    let imageWidth = imageRect.width
-    let imageHeight = imageRect.height
+  getRandomPosition(img) {
+    let imageRect = img.getBoundingClientRect();
+    let imageWidth = imageRect.width;
+    let imageHeight = imageRect.height;
 
-    let rect = window.document.body.getBoundingClientRect()
-    let bodyWidth = Math.max(rect.width, window.innerWidth)
-    let bodyHeight = Math.max(rect.height, window.innerHeight)
+    let rect = window.document.body.getBoundingClientRect();
+    let bodyWidth = Math.max(rect.width, window.innerWidth);
+    let bodyHeight = Math.max(rect.height, window.innerHeight);
 
-    let x = Math.round(Math.random() * (bodyWidth - imageWidth))
-    let y = Math.round(Math.random() * (bodyHeight - imageHeight))
+    let x = Math.round(Math.random() * (bodyWidth - imageWidth));
+    let y = Math.round(Math.random() * (bodyHeight - imageHeight));
 
-    return { x, y }
+    return { x, y };
   }
 
-  async draw (data) {
+  groupByPage(data) {
+    const pages = data.reduce((acc, curr) => {
+      if (!acc[curr.page]) {
+        acc[curr.page] = [];
+      }
+      acc[curr.page].push(curr);
+      return acc;
+    }, {});
 
-    let md5 = data.md5
+    return Object.entries(pages);
+  }
+
+  async draw(data) {
+    let md5 = data.md5;
 
     if (this.md5 === md5) {
-      this.spinner.hide()
-      this.loading = false
-      return
+      this.spinner.hide();
+      this.loading = false;
+      return;
     }
 
-    this.md5 = md5
-    this.imagePath = data.path
+    this.md5 = md5;
+    this.imagePath = data.path;
 
-    this.clear()
+    this.clear();
+    this.pages = this.groupByPage(data.files);
 
-    let pages = data.files.reduce((r, a) => {
-        r[a.page] = r[a.page] || []
-        r[a.page].push(a)
-        return r
-    }, Object.create(null))
+    this.loadFramesByPageID(this.currentPageID);
 
-    this.pages = Object.entries(pages)
+    this.addThumbnails(this.pages, this.imagePath);
 
-    this.pagination = new Pagination(this.pages)
-    this.pagination.$element.addEventListener('action', (event) => {
-      this.drawPage(event.detail.id)
-    })
+    this.pagination = new Pagination(this.currentFrames);
 
-    this.loadPages()
-    this.drawPage(this.currentPage)
+    this.pagination.$element.addEventListener("thumb-clicked", (event) => {
+      this.drawFrame(event.detail.id);
+    });
+
+    this.pagination.updatePages(this.currentFrames);
+    this.drawFrame(this.currentFrameID);
   }
 
-  drawPage (id) {
+  getFrameByID(id) {
+    return this.currentFrames.find((frame) => frame.getID() === id);
+  }
 
-    id = id >= this.pages.length ? 0 : id
+  drawFrame(id) {
+    const currentFrame = this.getFrameByID(id);
 
-    this.pagination.select(id)
-    this.frames.forEach((frame) => {
-      if (frame.getID() === id) {
-        frame.show()
-      } else {
-        frame.hide()
+    this.bindFrameEvents(currentFrame);
+
+    currentFrame.show().then(() => {
+      if (
+        this.previousFrame &&
+        this.previousFrame.getID() !== currentFrame.getID()
+      ) {
+        this.previousFrame.hide();
       }
-    })
+      this.previousFrame = currentFrame;
+    });
   }
 
-  loadPages () {
+  loadFramesByPageID(pageID) {
+    this.clear();
 
-    this.clear()
+    let promises = [];
 
-    let promises = []
+    const frames = this.pages[pageID][1];
 
-    this.pages.forEach((page, id) => {
-      page[1].forEach((file, index) => {
+    if (frames.length > 1) {
+    } else {
+    }
 
-        const frame = new Frame({ id, ...file }, this.imagePath)
-        this.frames.push(frame)
-        promises.push(frame.load())
-      })
-    })
+    this.startLoading();
 
-    Promise.all(promises).then(this.loadFrames.bind(this))
+    const reversedFrames = [...frames].reverse();
+
+    reversedFrames.forEach((data, id) => {
+      const frame = new Frame({ id, ...data }, this.imagePath);
+
+      this.currentFrames.push(frame);
+      promises.push(frame.load());
+    });
+
+    Promise.all(promises).then(this.loadFrames.bind(this));
   }
 
-  clear () {
-    this.frames.forEach(frame => frame.remove())
-    this.frames = []
+  clear() {
+    this.currentFrames.forEach((frame) => frame.remove());
+    this.currentFrames = [];
   }
 
-  getTotalHeight (results) {
-    let height = 0
+  getTotalHeight(results) {
+    let height = 0;
 
     results.forEach((frame) => {
-      let rect = frame.image.getBoundingClientRect()
-      height += rect.height
-    })
+      let rect = frame.image.getBoundingClientRect();
+      height += rect.height;
+    });
 
-    return height
+    return height;
   }
 
-  loadFrames (results) {
-    this.loading = false
+  loadFrames(results) {
+    this.loading = false;
+    this.spinner.hide();
+    this.stopLoading();
 
-    this.spinner.hide()
-
-    results.forEach((frame, index) => {
-      this.$canvas.appendChild(frame.image)
-    })
-  }
-
-  reposition () {
-    this.frames.forEach((frame) => {
-      let pos = this.getRandomPosition(frame.image)
-      frame.setPosition(pos.x, pos.y)
-    })
+    results.forEach((frame, _index) => {
+      this.$canvas.appendChild(frame.image);
+    });
   }
 }
-

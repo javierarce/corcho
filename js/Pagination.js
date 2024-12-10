@@ -1,50 +1,49 @@
 class Pagination {
-  constructor (pages, className = '') {
-    this.pages = pages
-    this.className = `${this.constructor.name} ${className}`.trim()
-    this.render()
+  constructor(pages) {
+    this.className = this.constructor.name.toLowerCase();
+    this.pages = pages;
+    this.currentPage = 1;
+    this.totalPages = pages.length;
+    this.render();
   }
 
-  show () {
-    this.$element.classList.toggle('is-visible', true)
+  show() {
+    this.$element.classList.toggle("is-visible", true);
   }
 
-  hide () {
-    this.$element.classList.toggle('is-visible', false)
+  hide() {
+    this.$element.classList.toggle("is-visible", false);
   }
 
-  select (id) {
-    let $pages = this.$element.querySelectorAll('[data-id]')
-    $pages.forEach(($page) => {
-      $page.classList.toggle('is-active', +$page.dataset.id === id)
-    })
+  select(id) {
+    this.currentPage = id + 1;
+    this.updateCounter();
   }
 
-  addPage (page, index) {
-    let $page = document.createElement('div')
-    $page.classList.add(`${this.className}__page`)
-    $page.dataset.id = index
+  updateCounter() {
+    this.$counter.textContent = `${this.currentPage}/${this.totalPages}`;
+  }
 
-    $page.onclick = () => {
-      this.select(index)
-      this.$element.dispatchEvent(new CustomEvent('action', { detail: { id: index } }))
+  updatePages(pages) {
+    this.totalPages = pages.length;
+    this.currentPage = 1;
+    if (pages.length > 1) {
+      this.show();
+      this.updateCounter();
+    } else {
+      this.hide();
     }
-
-    if (page.id === 0) {
-      $page.classList.add('is-active')
-    }
-    
-    this.$element.appendChild($page)
   }
 
-  render () {
-    this.$element = document.createElement('div')
-    this.className.split(' ').filter(c => c).forEach(name => this.$element.classList.add(name))
+  render() {
+    this.$element = document.createElement("div");
+    this.$element.classList.add(this.className);
 
-    this.pages.forEach((page, index) => {
-      this.addPage(page, index)
-    })
+    this.$counter = document.createElement("div");
+    this.$counter.classList.add(`${this.className}__counter`);
+    this.updateCounter();
 
-    document.body.appendChild(this.$element)
+    this.$element.appendChild(this.$counter);
+    document.body.appendChild(this.$element);
   }
 }

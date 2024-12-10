@@ -1,6 +1,5 @@
 const onLoad = () => {
-  window.backdrop = new Backdrop()
-  window.app = new App()
-}
+  window.app = new App();
+};
 
-window.onload = onLoad
+window.onload = onLoad;
