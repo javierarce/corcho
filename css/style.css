@@ -11,6 +11,7 @@
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-mono: "SF Mono", SFMono-Regular, ui-monospace, "DejaVu Sans Mono",
     Menlo, Consolas, monospace;
+  --line-height: 1.4;
 
   /* Thumbnails */
   --thumb-count: 5;
@@ -49,7 +50,7 @@ body {
   color: var(--text);
   background: var(--background);
   font-size: 1.4em;
-  line-height: 1.45;
+  line-height: var(--line-height);
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -218,7 +219,7 @@ a {
   padding: 16px;
   border-bottom: 1px solid var(--gray);
   font-size: 0.8em;
-  line-height: 1.45;
+  line-height: var(--line-height);
 }
 
 .comments__commentMessage:last-child {
@@ -350,6 +351,10 @@ a {
   color: var(--white);
   font-size: 1rem;
   font-weight: 500;
+  width: calc(var(--thumb-width) - 16px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 body.is-fullscreen {
