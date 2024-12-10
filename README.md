@@ -2,7 +2,7 @@
 
 Corcho (/ˈkoɾt͡ʃo/) is a tool that creates and sync web slideshows using the contents of a Figma file. You can then use GitHub Pages to host your slideshow on the web and have it automatically updated using GitHub Actions.
 
-## How to run this thing
+## How to run Corcho
 
 1. Create a file in Figma and your slides as frames.
 2. Create a non-expiring [Figma personal access token](https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-tokens).
@@ -45,9 +45,7 @@ on:
 4. Run the project with `yarn start` or `npm run start`
 5. Open the `index.html` file in your browser using a local server.
 
----
-
-### Shortcuts
+## Shortcuts
 
 | Key                   | Action            |
 | --------------------- | ----------------- |
@@ -68,8 +66,6 @@ on:
 | `→` / `Tab`         | Next page        |
 | `Enter`             | Select page      |
 | `Esc`               | Close navigation |
-
----
 
 ## Example
 
