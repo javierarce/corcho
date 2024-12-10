@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.1",
-    "figma-extractor": "^3.2.0",
+    "figma-extractor": "^3.2.1",
     "md5": "^2.3.0"
   }
 }

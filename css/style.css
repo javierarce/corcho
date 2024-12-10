@@ -207,6 +207,10 @@ a {
   visibility: hidden;
   transition: opacity var(--transition-normal);
   text-align: left;
+
+  overflow: hidden;
+  overflow-y: scroll;
+  max-height: 480px;
 }
 
 .comments.is-visible,
