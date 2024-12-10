@@ -196,30 +196,31 @@ class App {
       return;
     }
 
+    event.preventDefault();
+
     switch (event.code) {
       case "Space" && event.shiftKey:
-        event.preventDefault();
         this.loadPrevFrame();
         break;
 
       case "ArrowLeft":
-        event.preventDefault();
         this.loadPrevFrame();
         break;
 
       case "ArrowRight":
-        event.preventDefault();
         this.loadNextFrame();
         break;
 
       case "Tab":
-        event.preventDefault();
         this.thumbs.show(this.currentPageID);
         break;
 
       case "Space":
-        event.preventDefault();
         this.loadNextFrame();
+        break;
+
+      case "KeyR":
+        this.reload();
         break;
 
       case "KeyC":
@@ -237,9 +238,9 @@ class App {
         break;
 
       case "KeyF":
-        event.preventDefault();
         this.toggleFullscreen();
         break;
+
       case "Escape":
         if (this.isFullscreen) {
           document.exitFullscreen().catch(console.warn);
@@ -284,6 +285,12 @@ class App {
 
   loadNextFrame() {
     this.currentFrameID = (this.currentFrameID + 1) % this.currentFrames.length;
+    this.pagination.select(this.currentFrameID);
+    this.drawFrame(this.currentFrameID);
+  }
+
+  reload() {
+    this.currentFrameID = 0;
     this.pagination.select(this.currentFrameID);
     this.drawFrame(this.currentFrameID);
   }
@@ -335,28 +342,6 @@ class App {
       .catch((e) => {
         this.showErrorMessage(e);
       });
-  }
-
-  getCenterPosition(frame) {
-    let x = window.innerWidth / 2 - frame.getWidth() / 2;
-    let y = window.innerHeight / 2 - frame.getHeight() / 2;
-
-    return { x, y };
-  }
-
-  getRandomPosition(img) {
-    let imageRect = img.getBoundingClientRect();
-    let imageWidth = imageRect.width;
-    let imageHeight = imageRect.height;
-
-    let rect = window.document.body.getBoundingClientRect();
-    let bodyWidth = Math.max(rect.width, window.innerWidth);
-    let bodyHeight = Math.max(rect.height, window.innerHeight);
-
-    let x = Math.round(Math.random() * (bodyWidth - imageWidth));
-    let y = Math.round(Math.random() * (bodyHeight - imageHeight));
-
-    return { x, y };
   }
 
   groupByPage(data) {

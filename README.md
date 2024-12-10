@@ -54,16 +54,17 @@ available for your account type.
 
 ## Shortcuts
 
-| Key                                                 | Action            |
-| --------------------------------------------------- | ----------------- |
-| <kbd>←</kbd> or <kbd>Space</kbd> + <kbd>Shift</kbd> | Previous slide    |
-| <kbd>→</kbd> or <kbd>Space</kbd>                    | Next slide        |
-| <kbd>J</kbd> or <kbd>Page Down</kbd>                | Next page         |
-| <kbd>K</kbd> or <kbd>Page Up</kbd>                  | Previous page     |
-| <kbd>Tab</kbd>                                      | Open navigation   |
-| <kbd>F</kbd>                                        | Toggle fullscreen |
-| <kbd>Esc</kbd>                                      | Exit fullscreen   |
-| <kbd>C</kbd>                                        | Toggle comments   |
+| Key                                                 | Action              |
+| --------------------------------------------------- | ------------------- |
+| <kbd>←</kbd> or <kbd>Space</kbd> + <kbd>Shift</kbd> | Previous slide      |
+| <kbd>→</kbd> or <kbd>Space</kbd>                    | Next slide          |
+| <kbd>J</kbd> or <kbd>Page Down</kbd>                | Next page           |
+| <kbd>K</kbd> or <kbd>Page Up</kbd>                  | Previous page       |
+| <kbd>Tab</kbd>                                      | Open navigation     |
+| <kbd>F</kbd>                                        | Toggle fullscreen   |
+| <kbd>Esc</kbd>                                      | Exit fullscreen     |
+| <kbd>C</kbd>                                        | Toggle comments     |
+| <kbd>R</kbd>                                        | Reload presentation |
 
 ### When the navigation is open
 
