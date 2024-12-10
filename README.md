@@ -30,7 +30,7 @@ on:
   push:
     branches: [ "main" ]
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/5 * "*
 ```
 
 ### Locally
@@ -47,25 +47,25 @@ on:
 
 ## Shortcuts
 
-| Key                   | Action            |
-| --------------------- | ----------------- |
-| `←` / `Space + Shift` | Previous slide    |
-| `→` / `Space`         | Next slide        |
-| `J` / `Page Down`     | Next page         |
-| `K` / `Page Up`       | Previous page     |
-| `Tab`                 | Open navigation   |
-| `F`                   | Toggle fullscreen |
-| `Esc`                 | Exit fullscreen   |
-| `C`                   | Toggle comments   |
+| Key                                                 | Action            |
+| --------------------------------------------------- | ----------------- |
+| <kbd>←</kbd> or <kbd>Space</kbd> + <kbd>Shift</kbd> | Previous slide    |
+| <kbd>→</kbd> or <kbd>Space</kbd>                    | Next slide        |
+| <kbd>J</kbd> or <kbd>Page Down</kbd>                | Next page         |
+| <kbd>K</kbd> or <kbd>Page Up</kbd>                  | Previous page     |
+| <kbd>Tab</kbd>                                      | Open navigation   |
+| <kbd>F</kbd>                                        | Toggle fullscreen |
+| <kbd>Esc</kbd>                                      | Exit fullscreen   |
+| <kbd>C</kbd>                                        | Toggle comments   |
 
 ### When the navigation is open
 
-| Key                 | Action           |
-| ------------------- | ---------------- |
-| `←` / `Tab + Shift` | Previous page    |
-| `→` / `Tab`         | Next page        |
-| `Enter`             | Select page      |
-| `Esc`               | Close navigation |
+| Key                                               | Action           |
+| ------------------------------------------------- | ---------------- |
+| <kbd>←</kbd> or <kbd>Tab</kbd> + <kbd>Shift</kbd> | Previous page    |
+| <kbd>→</kbd> or <kbd>Tab</kbd>                    | Next page        |
+| <kbd>Enter</kbd>                                  | Select page      |
+| <kbd>Esc</kbd>                                    | Close navigation |
 
 ## Example
 
