@@ -58,7 +58,7 @@ on:
 | `Esc`                 | Exit fullscreen   |
 | `R`                   | Refresh data      |
 
-### Navigate between pages
+### When the navigation is open
 
 | Key                 | Action           |
 | ------------------- | ---------------- |
