@@ -58,6 +58,37 @@ class Comments {
     }
   }
 
+  timeAgo(date) {
+    let seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    let interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+      return interval + " years ago";
+    }
+
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+      return interval + " months ago";
+    }
+
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+      return interval + " days ago";
+    }
+
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+      return interval + " hours ago";
+    }
+
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+      return interval + " minutes ago";
+    }
+
+    return Math.floor(seconds) + " seconds ago";
+  }
+
   urlify(text) {
     let urlRegex = /(https?:\/\/[^\s]+)/g;
 
@@ -66,18 +97,45 @@ class Comments {
     });
   }
 
+  addComment(comment) {
+    const $comment = document.createElement("div");
+    const $message = document.createElement("div");
+    const $header = document.createElement("div");
+    const $author = document.createElement("div");
+    const $date = document.createElement("div");
+
+    $comment.classList.add("comment");
+    $header.classList.add("comment__header");
+    $message.classList.add("comment__message");
+    $author.classList.add("comment__author");
+    $date.classList.add("comment__date");
+
+    $message.innerHTML = this.urlify(comment.message).replace(
+      "\n",
+      "<br /><br />",
+    );
+
+    $author.textContent = comment.user;
+    $date.textContent = this.timeAgo(comment.created_at);
+    $date.title = comment.created_at;
+
+    $header.appendChild($author);
+    $header.appendChild($date);
+    $comment.appendChild($header);
+    $comment.appendChild($message);
+
+    return $comment;
+  }
+
   displayComments() {
     this.$comment = document.createElement("div");
-    this.$comment.classList.add(`${this.className}__comment`);
+    this.$comment.classList.add(`${this.className}__content`);
     this.$comment.onclick = (event) => {
       event.stopPropagation();
     };
 
     this.comments.forEach((comment) => {
-      let $comment = document.createElement("div");
-      $comment.classList.add(`${this.className}__commentMessage`);
-      $comment.innerHTML = this.urlify(comment).replace("\n", "<br /><br />");
-      this.$comment.appendChild($comment);
+      this.$comment.appendChild(this.addComment(comment));
     });
 
     this.$badge = document.createElement("div");
@@ -87,7 +145,7 @@ class Comments {
     this.$element.appendChild(this.$comment);
 
     this.$comment = document.createElement("div");
-    this.$comment.classList.add(`${this.className}__comment`);
+    this.$comment.classList.add(`${this.className}__content`);
     this.$comment.onclick = (event) => {
       event.stopPropagation();
     };

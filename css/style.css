@@ -195,7 +195,7 @@ a {
   z-index: 10000000;
 }
 
-.comments__comment {
+.comments__content {
   position: fixed;
   top: var(--spacing-m);
   right: 80px;
@@ -214,19 +214,41 @@ a {
 }
 
 .comments.is-visible,
-.comments.is-open .comments__comment {
+.comments.is-open .comments__content {
   opacity: 1;
   visibility: visible;
 }
 
-.comments__commentMessage {
+.comment {
   padding: 16px;
   border-bottom: 1px solid var(--gray);
+}
+
+.comment__header {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-x);
+  font-size: 0.7em;
+}
+
+.comment__date {
+  opacity: 0.6;
+}
+
+.comment__author {
+  font-weight: 600;
+}
+
+.comment__message {
   font-size: 0.8em;
   line-height: var(--line-height);
 }
 
-.comments__commentMessage:last-child {
+.comment__message a {
+  font-weight: 500;
+}
+
+.comment:last-child {
   border-bottom: none;
 }
 
