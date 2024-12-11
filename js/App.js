@@ -196,26 +196,29 @@ class App {
       return;
     }
 
-    event.preventDefault();
-
     switch (event.code) {
       case "Space" && event.shiftKey:
+        event.preventDefault();
         this.loadPrevFrame();
         break;
 
       case "ArrowLeft":
+        event.preventDefault();
         this.loadPrevFrame();
         break;
 
       case "ArrowRight":
+        event.preventDefault();
         this.loadNextFrame();
         break;
 
       case "Tab":
+        event.preventDefault();
         this.thumbs.show(this.currentPageID);
         break;
 
       case "Space":
+        event.preventDefault();
         this.loadNextFrame();
         break;
 
@@ -224,24 +227,29 @@ class App {
         break;
 
       case "KeyC":
+        event.preventDefault();
         this.comments.onClick(event);
         break;
 
       case "PageDown":
       case "KeyJ":
+        event.preventDefault();
         this.loadNextPage();
         break;
 
       case "PageUp":
       case "KeyK":
+        event.preventDefault();
         this.loadPrevPage();
         break;
 
       case "KeyF":
+        event.preventDefault();
         this.toggleFullscreen();
         break;
 
       case "Escape":
+        event.preventDefault();
         if (this.isFullscreen) {
           document.exitFullscreen().catch(console.warn);
         }
