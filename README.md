@@ -54,7 +54,7 @@ available for your account type.
 
 ## Shortcuts
 
-| Key                                                 | Action                                            |
+|: Key                                                |: Action                                           |
 | --------------------------------------------------- | ------------------------------------------------- |
 | <kbd>←</kbd> or <kbd>Space</kbd> + <kbd>Shift</kbd> | Previous slide                                    |
 | <kbd>→</kbd> or <kbd>Space</kbd>                    | Next slide                                        |
@@ -68,7 +68,7 @@ available for your account type.
 
 ### When the navigation is open
 
-| Key                                               | Action           |
+|: Key                                              |: Action          |
 | ------------------------------------------------- | ---------------- |
 | <kbd>←</kbd> or <kbd>Tab</kbd> + <kbd>Shift</kbd> | Previous page    |
 | <kbd>→</kbd> or <kbd>Tab</kbd>                    | Next page        |
