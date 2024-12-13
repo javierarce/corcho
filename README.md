@@ -6,7 +6,7 @@ Corcho (/ˈkoɾt͡ʃo/) is a tool that creates and sync web slideshows using the
 
 1. Create a file in Figma and your slides as frames.
 2. Create a non-expiring [Figma personal access token](https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-tokens).
-3. Copy the file id of your Figma file (which is the string of random alphanumeric characters found in the URL after `figma.com/file`)
+3. Copy the file id of your Figma file (which is the string of random alphanumeric characters found in the URL after `figma.com/design/`)
 
 ### On GitHub Pages
 
