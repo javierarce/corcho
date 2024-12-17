@@ -207,10 +207,10 @@
     "utils-merge" "1.0.1"
     "vary" "~1.1.2"
 
-"figma-extractor@^3.2.1":
-  "integrity" "sha512-wuQxn9nqhvVJ4rj2Ol4gxXxBXrZGy6zEe0/jL8AeosKOzcsbJ2oKCCKJH/iHArvUSOVB7f7ISr6nfJEWuVz+Og=="
-  "resolved" "https://registry.npmjs.org/figma-extractor/-/figma-extractor-3.2.1.tgz"
-  "version" "3.2.1"
+"figma-extractor@^3.2.2":
+  "integrity" "sha512-a19b2AHXF2TGCIJNLF9Pps5HWsmtLmr+8wHEYtRRZvk6/mDoY+jz5KfOfiN/ctv7aerd0eKLTka9OBvj4iwqRA=="
+  "resolved" "https://registry.npmjs.org/figma-extractor/-/figma-extractor-3.2.2.tgz"
+  "version" "3.2.2"
   dependencies:
     "express" "^4.17.1"
     "figma-js" "^1.13.0"
