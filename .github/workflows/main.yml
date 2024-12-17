@@ -1,7 +1,7 @@
 name: Cron
 on:
   schedule:
-    - cron: "0 0 * * * *" # Runs every midnight
+    - cron: "0 0 * * *" # Runs every midnight
 
 jobs:
   cron:
