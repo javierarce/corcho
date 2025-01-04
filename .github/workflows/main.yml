@@ -19,7 +19,7 @@ jobs:
         env:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
           FIGMA_FILE: ${{ secrets.FIGMA_FILE }}
-          FILE_TYPE: ${{ secrets.FILE_TYPE }}
+          FILE_FORMAT: ${{ secrets.FILE_FORMAT }}
         run: npm run start
       - uses: EndBug/add-and-commit@v9
         with:
